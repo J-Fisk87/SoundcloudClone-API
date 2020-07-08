@@ -6,9 +6,20 @@ class UsersController < ApplicationController
     end
 
     def create
-        user = User.create(create_user_params)
-        render json: user
-    end
+        @user = User.new(create_user_params)
+        if @user.save
+          login!
+          render json: {
+            status: :created,
+            user: @user
+          }
+        else 
+          render json: {
+            status: 500,
+            errors: @user.errors.full_messages
+          }
+        end
+      end
 
     def follow_user
         user = User.find_by(id: params[:id])
@@ -24,6 +35,7 @@ class UsersController < ApplicationController
         render json: user
     end
 
+    private 
     # params functions
     def create_user_params
         params.require(:user).permit(:username, :email, :password)
