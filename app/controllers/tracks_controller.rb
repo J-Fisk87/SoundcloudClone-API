@@ -2,7 +2,7 @@ class TracksController < ApplicationController
     def create 
         p params
         user = User.find_by(id: params[:user_id])
-        track = Track.create(create_track_params)
+        track = Track.create(title: params[:title], audio_data: params[:audio_data])
         user.tracks << track
         render json: track
     end

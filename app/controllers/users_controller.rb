@@ -21,6 +21,17 @@ class UsersController < ApplicationController
         end
       end
 
+    def user_feed 
+        user = User.find_by(id: params[:id])
+        followees = user.followees
+        feed = []
+        followees.each {|f| f.tracks.each {|t|  feed << {id: t.id, title: t.title, audio: rails_blob_url(t.audio_data), username: t.user.username, user_id: t.user.id }}}
+        p followees
+        render json: {
+            feed: feed
+        }
+    end
+
     def follow_user
         user = User.find_by(id: params[:id])
         user_to_follow = User.find_by(id: params[:follower_id])

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   # Users routes
   get '/api/users/:id', to: 'users#user'
+  get '/api/users/:id/feed', to: 'users#user_feed'
   put 'api/users/:id/follow_user/:follower_id', to: 'users#follow_user'
   put 'api/users/:id/unfollow_user/:follower_id', to: 'users#unfollow_user'
 
