@@ -46,6 +46,11 @@ class UsersController < ApplicationController
         render json: user
     end
 
+    def is_following
+      user = User.find_by(id: params[:id])
+      render json: { id: params[:followee_id, is_following: user.followees.any? {|f| f[:id] == params[:followee_id]}} 
+    end
+
     private 
     # params functions
     def create_user_params

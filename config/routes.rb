@@ -8,11 +8,11 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   get '/logged_in', to: 'sessions#is_logged_in?'
   
-
-
+  
   # Users routes
   get '/api/users/:id', to: 'users#user'
   get '/api/users/:id/feed', to: 'users#user_feed'
+  get '/api/users/:id/is_following/:followee_id', to: 'users#is_following'
   put 'api/users/:id/follow_user/:follower_id', to: 'users#follow_user'
   put 'api/users/:id/unfollow_user/:follower_id', to: 'users#unfollow_user'
 
