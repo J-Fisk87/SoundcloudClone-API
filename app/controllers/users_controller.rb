@@ -25,10 +25,11 @@ class UsersController < ApplicationController
         user = User.find_by(id: params[:id])
         followees = user.followees
         feed = []
-        followees.each {|f| f.tracks.each {|t|  feed << {id: t.id, title: t.title, audio: rails_blob_url(t.audio_data), username: t.user.username, user_id: t.user.id }}}
-        p followees
+        user.tracks.each {|t|  feed << {id: t.id, title: t.title, audio: rails_blob_url(t.audio_data), username: t.user.username, user_id: t.user.id, created_at: t.created_at }}
+        followees.each {|f| f.tracks.each {|t|  feed << {id: t.id, title: t.title, audio: rails_blob_url(t.audio_data), username: t.user.username, user_id: t.user.id, created_at: t.created_at }}}
+        p feed.count
         render json: {
-            feed: feed
+            feed: feed.sort_by { |t| t[:created_at] }.reverse
         }
     end
 
