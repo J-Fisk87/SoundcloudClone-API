@@ -58,6 +58,13 @@ class UsersController < ApplicationController
       render json: tracks
     end
 
+    def search_users
+        users = User.where("username like ?", "%#{params[:search_text]}%")
+        render json: {
+            users: users
+        }
+    end
+
     private 
     # params functions
     def create_user_params
