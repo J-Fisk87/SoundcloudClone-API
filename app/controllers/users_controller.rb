@@ -48,13 +48,16 @@ class UsersController < ApplicationController
     end
 
     def is_following
-      user = User.find_by(id: params[:id])
-      render json: { id: params[:followee_id, is_following: user.followees.any? {|f| f[:id] == params[:followee_id]}]} 
+        user = User.find_by(id: params[:id])
+      following = user.followees.any? {|f| f.id == params[:followee_id].to_i}
+      p user.followees
+      p params[:followee_id]
+      render json: {is_following: following} 
     end
 
     def user_tracks
       user = User.find_by(id: params[:id])
-      tracks = user.tracks
+      tracks = user.tracks.map {|t| {id: t.id, title: t.title, audio: rails_blob_url(t.audio_data), username: t.user.username, user_id: t.user.id, created_at: t.created_at }}
       render json: tracks
     end
 
