@@ -16,11 +16,14 @@ Rails.application.routes.draw do
   get '/api/users/:id/tracks', to: 'users#user_tracks'
   put 'api/users/:id/follow_user/:follower_id', to: 'users#follow_user'
   put 'api/users/:id/unfollow_user/:follower_id', to: 'users#unfollow_user'
+  get '/api/users/search/:search_text', to: 'users#search_users'
 
 
   # Tracks routes
   post '/api/tracks/new', to: 'tracks#create'
   get '/api/tracks/:id', to: 'tracks#track'
+  get '/api/tracks/search/:search_text', to: 'tracks#search_tracks'
+
 
 
 
